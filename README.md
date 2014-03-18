@@ -28,7 +28,7 @@ This demo package requires both Unity3D <http://unity3d.com> and NGUI <http://ww
 
 To run the demo:
 
-1. Create a new Unity Project
+1. Create a new Unity Project (preferably mobile i.e. iOS or Android)
 2. Import NGUI **including its examples** as the demo uses the atlas's from the examples
 3. Import InfiniteListDemo folder or simply double click on InfiniteListDemoPackage
 4. Run the scene (InfiniteListDemo)
