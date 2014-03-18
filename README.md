@@ -1,16 +1,14 @@
 Description
 =================
-====
-A component that runs on top of NGUI's UIScrollView & UITable classes for Unity3D (i.e. It requires NGUI &amp; Unity3D) can be used with dynamic data
+A component that runs on top of NGUI's UIScrollView & UITable classes for Unity3D (i.e. It requires NGUI &amp; Unity3D) can be used with dynamic data.
 
 Instead of instantiating a Prefab for each row in the list we are instantiating a fixed pool of objects that will be 
-resused according to the scroll direction.
+reused according to the scroll direction.
 
-Best suited for Mobile (tested on both iOS & Android)
+Best suited for Mobile (tested on both iOS & Android).
 
 Features
 ============
-====
 
 * Infinite scrolling with clipping panel
 * **Only fixed height cells are supported for now**
@@ -23,7 +21,6 @@ Features
 
 The Demo
 ============
-===
 This demo package requires both Unity3D <http://unity3d.com> and NGUI <http://www.tasharen.com/?page_id=140> to be installed
 
 To run the demo:
