@@ -36,7 +36,7 @@ To run the demo:
 The demo package is released under the MIT License:
 <http://opensource.org/licenses/MIT>
 
-Main Classes & Methods
+Main Classes & Methods in the Demo
 ===========
 ===
 ##InfiniteListPopulator 
@@ -80,6 +80,11 @@ Events that can be listened to if required
 
 ====
 
+	string GetTitleForSection(int i)
+
+Here you can include section titles
+
+====
 ##InfiniteItemBehaviour and InfiniteSectionBehaviour
 Scripts attached to the row item prefab & section prefab **(Note: the item prefab need to be tagged as "listItem" and the section prefab as "listSection")** 
 
