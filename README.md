@@ -18,7 +18,7 @@ Features
 * Quick jump (selecting a start point)
 * Simple sections implementation **(section height need to be equal to the item height)**
 * Click item callbacks
-* **Tested on Unity v4.2.2 & Unity v4.3 and NGUI v3.0.9c**
+* **Tested on Unity v4.2.2 & Unity v4.3 and NGUI v3.0.9f7**
 
 
 The Demo
