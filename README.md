@@ -6,7 +6,7 @@ A component that runs on top of NGUI's UIScrollView & UITable classes for Unity3
 Instead of instantiating a Prefab for each row in the list we are instantiating a fixed pool of objects that will be 
 resused according to the scroll direction.
 
-
+Best suited for Mobile (tested on both iOS & Android)
 
 Features
 ============
