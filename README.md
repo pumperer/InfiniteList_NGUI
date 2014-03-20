@@ -91,4 +91,4 @@ Events that can be listened to if required
 ##InfiniteItemBehaviour and InfiniteSectionBehaviour
 Scripts attached to the row item prefab & section prefab **(Note: the item prefab need to be tagged as "listItem" and the section prefab as "listSection")** 
 
-Both checks for the visiblity of the item when the list start scrolling and notifiy the InfiniteListPopulator when the items becomes invisible. you can use them as a template and include more labels, sprites or textures.
+Both checks for the visiblity of the item when the list start scrolling and notifiy the InfiniteListPopulator when the items becomes invisible. you can use them as a template and include more labels, sprites or textures...etc
