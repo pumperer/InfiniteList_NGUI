@@ -171,29 +171,31 @@ public class InfiniteListPopulator : MonoBehaviour {
 				if(sectionsIndices.Contains(i) && item.tag.Equals(listItemTag))
 				{
 					// change item to section
-					Object.Destroy(item.gameObject);
-					item = Instantiate(sectionPrefab) as Transform;
-					item.GetComponent<InfiniteSectionBehavior>().itemNumber = j;
-					item.GetComponent<InfiniteSectionBehavior>().label.text = GetTitleForSection(sectionsIndices.IndexOf(i));
-
-					item.name = "item"+i;
-					item.parent = table.transform;
-					item.GetComponent<InfiniteSectionBehavior>().itemDataIndex = i;
-					item.GetComponent<InfiniteSectionBehavior>().listPopulator = this;
-					item.GetComponent<InfiniteSectionBehavior>().panel = draggablePanel.panel;
-
-					itemsPool[j] = item;
-					dataTracker.Add(itemsPool[j].GetComponent<InfiniteSectionBehavior>().itemDataIndex,itemsPool[j].GetComponent<InfiniteSectionBehavior>().itemNumber);
+					InitSection(item,i,j);
+//					Object.Destroy(item.gameObject);
+//					item = Instantiate(sectionPrefab) as Transform;
+//					item.GetComponent<InfiniteSectionBehavior>().itemNumber = j;
+//					item.GetComponent<InfiniteSectionBehavior>().label.text = GetTitleForSection(sectionsIndices.IndexOf(i));
+//
+//					item.name = "item"+i;
+//					item.parent = table.transform;
+//					item.GetComponent<InfiniteSectionBehavior>().itemDataIndex = i;
+//					item.GetComponent<InfiniteSectionBehavior>().listPopulator = this;
+//					item.GetComponent<InfiniteSectionBehavior>().panel = draggablePanel.panel;
+//
+//					itemsPool[j] = item;
+//					dataTracker.Add(itemsPool[j].GetComponent<InfiniteSectionBehavior>().itemDataIndex,itemsPool[j].GetComponent<InfiniteSectionBehavior>().itemNumber);
 
 				}
 				else
 				{
-					item.GetComponent<InfiniteItemBehavior>().itemDataIndex = i;
-					item.GetComponent<InfiniteItemBehavior>().listPopulator = this;
-					item.GetComponent<InfiniteItemBehavior>().panel = draggablePanel.panel;
-					item.name = "item"+i;
-					item.GetComponent<InfiniteItemBehavior>().label.text = dataList[i];
-					dataTracker.Add(itemsPool[j].GetComponent<InfiniteItemBehavior>().itemDataIndex,itemsPool[j].GetComponent<InfiniteItemBehavior>().itemNumber);
+					InitListItemWithIndex(item,i,j);
+//					item.GetComponent<InfiniteItemBehavior>().itemDataIndex = i;
+//					item.GetComponent<InfiniteItemBehavior>().listPopulator = this;
+//					item.GetComponent<InfiniteItemBehavior>().panel = draggablePanel.panel;
+//					item.name = "item"+i;
+//					item.GetComponent<InfiniteItemBehavior>().label.text = dataList[i];
+//					dataTracker.Add(itemsPool[j].GetComponent<InfiniteItemBehavior>().itemDataIndex,itemsPool[j].GetComponent<InfiniteItemBehavior>().itemNumber);
 
 				}
 				Debug.Log(item.name+"::"+item.tag);
@@ -208,7 +210,7 @@ public class InfiniteListPopulator : MonoBehaviour {
 			}
 		}
 
-		// at the moment we are repositioning the list after a delay... repositioning immediatly messes up the table... no clue why...
+		// at the moment we are repositioning the list after a delay... repositioning immediatly messes up the table when refreshing... no clue why...
 		Invoke("RepositionList",0.1f);
 	}
 	
@@ -224,6 +226,23 @@ public class InfiniteListPopulator : MonoBehaviour {
 			Transform item = itemsPool[i];
 			item.localPosition = new Vector3(item.localPosition.x,-((cellHeight/2) + i * cellHeight),item.localPosition.z);
 		}
+	}
+	void InitSection(Transform item, int dataIndex, int poolIndex)
+	{
+		Object.Destroy(item.gameObject);
+		item = Instantiate(sectionPrefab) as Transform;
+		item.GetComponent<InfiniteSectionBehavior>().itemNumber = poolIndex;
+		item.GetComponent<InfiniteSectionBehavior>().label.text = GetTitleForSection(sectionsIndices.IndexOf(dataIndex));
+		
+		item.name = "item"+dataIndex;
+		item.parent = table.transform;
+		item.GetComponent<InfiniteSectionBehavior>().itemDataIndex = dataIndex;
+		item.GetComponent<InfiniteSectionBehavior>().listPopulator = this;
+		item.GetComponent<InfiniteSectionBehavior>().panel = draggablePanel.panel;
+		
+		itemsPool[poolIndex] = item;
+		dataTracker.Add(itemsPool[poolIndex].GetComponent<InfiniteSectionBehavior>().itemDataIndex,itemsPool[poolIndex].GetComponent<InfiniteSectionBehavior>().itemNumber);
+
 	}
 	void ChangeSectionToItem(Transform item, int newIndex,int oldIndex)
 	{
@@ -241,6 +260,16 @@ public class InfiniteListPopulator : MonoBehaviour {
 		itemsPool[j] = item;
 
 		PopulateListItemWithIndex(item,newIndex,oldIndex);
+	}
+	void InitListItemWithIndex(Transform item, int dataIndex, int poolIndex)
+	{
+		item.GetComponent<InfiniteItemBehavior>().itemDataIndex = dataIndex;
+		item.GetComponent<InfiniteItemBehavior>().listPopulator = this;
+		item.GetComponent<InfiniteItemBehavior>().panel = draggablePanel.panel;
+		item.name = "item"+dataIndex;
+		item.GetComponent<InfiniteItemBehavior>().label.text = dataList[dataIndex];
+		dataTracker.Add(itemsPool[poolIndex].GetComponent<InfiniteItemBehavior>().itemDataIndex,itemsPool[poolIndex].GetComponent<InfiniteItemBehavior>().itemNumber);
+
 	}
 	void PopulateListItemWithIndex(Transform item, int newIndex,int oldIndex)
 	{
