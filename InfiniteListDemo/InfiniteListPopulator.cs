@@ -49,7 +49,7 @@ public class InfiniteListPopulator : MonoBehaviour {
 	//our data
 	private List<string> originalData = new List<string>();
 	private List<string> dataList = new List<string>();
-	private int cursor = 0; // where to start
+	private int startIndex = 0; // where to start
 	private Hashtable dataTracker = new Hashtable();// hashtable to keep track of what is being displayed
 	//sections
 	private int numberOfSections = 0;
@@ -116,12 +116,12 @@ public class InfiniteListPopulator : MonoBehaviour {
 	#region Test Examples
 	public void NoSections()
 	{
-		SetCursor(0);
+		SetStartIndex(0);
 		InitTableView(originalData,0,new List<int>());
 	}
 	public void JumpTo30()
 	{
-		SetCursor(30);
+		SetStartIndex(30);
 		InitTableView(originalData,sectionsIndices.Count,sectionsIndices);
 	}
 	public void ThreeSections()
@@ -130,20 +130,20 @@ public class InfiniteListPopulator : MonoBehaviour {
 		indices.Add(0);
 		indices.Add(5);
 		indices.Add(10);
-		SetCursor(0);
+		SetStartIndex(0);
 		InitTableView(originalData,indices.Count,indices);
 	}
 	#endregion
 
 	#region Infinite List Management & scrolling
-	public void SetCursor(int inCursor)
+	public void SetStartIndex(int inStartIndex)
 	{
-		cursor = GetJumpIndexForItem(inCursor);
+		startIndex = GetJumpIndexForItem(inStartIndex);
 	}
 	public void InitTableView(List<string> inDataList, int inNumberOfSections, List<int> inSectionsIndices)
 	{
 		RefreshPool();
-		scrollCursor = cursor;
+		scrollCursor = startIndex;
 		dataTracker.Clear();
 		originalData = new List<string>(inDataList);
 		dataList = new List<string>(inDataList);
@@ -162,7 +162,7 @@ public class InfiniteListPopulator : MonoBehaviour {
 		}
 
 		int j = 0;
-		for(int i=cursor; i<dataList.Count; i++)
+		for(int i=startIndex; i<dataList.Count; i++)
 		{
 			Transform item = GetItemFromPool(j);
 			if(item!=null)
@@ -235,19 +235,23 @@ public class InfiniteListPopulator : MonoBehaviour {
 		item = Instantiate(itemPrefab) as Transform;
 		item.parent = table.transform;
 		item.localPosition = lastPosition;
+		item.GetComponent<InfiniteItemBehavior>().itemNumber = j;
+		item.GetComponent<InfiniteItemBehavior>().listPopulator = this;
+		item.GetComponent<InfiniteItemBehavior>().panel = draggablePanel.panel;
+		itemsPool[j] = item;
+
+		PopulateListItemWithIndex(item,newIndex,oldIndex);
+	}
+	void PopulateListItemWithIndex(Transform item, int newIndex,int oldIndex)
+	{
 		if(newIndex <oldIndex)
 			item.localPosition += new Vector3(0,(poolSize)*cellHeight,0);
 		else
-			item.localPosition -= new Vector3(0,(poolSize)*cellHeight,0);		
-		
-		item.name = "item"+(newIndex);
-		item.GetComponent<InfiniteItemBehavior>().itemNumber = j;
-		item.GetComponent<InfiniteItemBehavior>().itemDataIndex = newIndex;
-		item.GetComponent<InfiniteItemBehavior>().listPopulator = this;
-		item.GetComponent<InfiniteItemBehavior>().panel = draggablePanel.panel;
+			item.localPosition -= new Vector3(0,(poolSize)*cellHeight,0);
+
 		item.GetComponent<InfiniteItemBehavior>().label.text = dataList[newIndex];
-		
-		itemsPool[j] = item;
+		item.GetComponent<InfiniteItemBehavior>().itemDataIndex=newIndex;
+		item.name = "item"+(newIndex);
 		dataTracker.Add(newIndex,(int)(dataTracker[oldIndex]));
 		dataTracker.Remove(oldIndex);
 	}
@@ -282,20 +286,9 @@ public class InfiniteListPopulator : MonoBehaviour {
 		dataTracker.Add(newIndex,(int)(dataTracker[oldIndex]));
 		dataTracker.Remove(oldIndex);
 	}
-	void PopulateListItemWithIndex(Transform item, int newIndex,int oldIndex)
-	{
-		
-		if(newIndex <oldIndex)
-			item.localPosition += new Vector3(0,(poolSize)*cellHeight,0);
-		else
-			item.localPosition -= new Vector3(0,(poolSize)*cellHeight,0);
-		item.GetComponent<InfiniteItemBehavior>().label.text = dataList[newIndex];
-		item.GetComponent<InfiniteItemBehavior>().itemDataIndex=newIndex;
-		item.name = "item"+(newIndex);
-		dataTracker.Add(newIndex,(int)(dataTracker[oldIndex]));
-		dataTracker.Remove(oldIndex);
-	}
-		private bool isUpdatingList = false;
+
+
+	private bool isUpdatingList = false;
 	
 	public IEnumerator ItemIsInvisible(int itemNumber)
 	{

@@ -1,16 +1,14 @@
 Description
 =================
-====
-A component that runs on top of NGUI's UIScrollView & UITable classes for Unity3D (i.e. It requires NGUI &amp; Unity3D) can be used with dynamic data
+A component that runs on top of NGUI's UIScrollView & UITable classes for Unity3D (i.e. It requires NGUI &amp; Unity3D) can be used with dynamic data.
 
 Instead of instantiating a Prefab for each row in the list we are instantiating a fixed pool of objects that will be 
-resused according to the scroll direction.
+reused according to the scroll direction.
 
-
+Best suited for Mobile (tested on both iOS & Android).
 
 Features
 ============
-====
 
 * Infinite scrolling with clipping panel
 * **Only fixed height cells are supported for now**
@@ -18,17 +16,16 @@ Features
 * Quick jump (selecting a start point)
 * Simple sections implementation **(section height need to be equal to the item height)**
 * Click item callbacks
-* **Tested on Unity v4.2.2 & Unity v4.3 and NGUI v3.0.9c**
+* **Tested on Unity v4.2.2 & Unity v4.3 and NGUI v3.0.9f7**
 
 
 The Demo
 ============
-===
 This demo package requires both Unity3D <http://unity3d.com> and NGUI <http://www.tasharen.com/?page_id=140> to be installed
 
 To run the demo:
 
-1. Create a new Unity Project
+1. Create a new Unity Project (preferably mobile i.e. iOS or Android)
 2. Import NGUI **including its examples** as the demo uses the atlas's from the examples
 3. Import InfiniteListDemo folder or simply double click on InfiniteListDemoPackage
 4. Run the scene (InfiniteListDemo)
@@ -36,7 +33,7 @@ To run the demo:
 The demo package is released under the MIT License:
 <http://opensource.org/licenses/MIT>
 
-Main Classes & Methods
+Main Classes & Methods in the Demo
 ===========
 ===
 ##InfiniteListPopulator 
@@ -45,7 +42,7 @@ The main controller script that can be attached to a gameobject (e.g. the panel)
 Some of the main methods included:
 
 ====
-    	public void InitTableView(List<string> inDataList, int inNumberOfSections, List<int> inSectionsIndices)
+    public void InitTableView(List<string> inDataList, int inNumberOfSections, List<int> inSectionsIndices)
 Initializes the list (also can be called to refresh the list with new data)
 ####parameters:
 * inDataList: the List of strings we want to display (you can change it to any type you want… just make sure to change the member variables types for dataList & OriginalData)
@@ -54,11 +51,22 @@ Initializes the list (also can be called to refresh the list with new data)
 
 ===
 
-   	  public void SetCursor(int inCursor)
+	public void SetStartIndex(int inStartIndex)
 
 marks where to start reading the data list (the value is 0 if not set)
 ####parameters:
-* inCursor: int 
+* inStartIndex: int 
+
+===
+
+	string GetTitleForSection(int i)
+
+Here you can include section titles
+
+====
+
+	void PopulateListItemWithIndex(Transform item, int newIndex,int oldIndex)
+Here you can populate your row item with data (in the demo we simply set a label to string value from our datalist array). Simply change InfiniteItemBehaviour (mentioned later below) to include more items as you want.
 
 ===
 	public int GetRealIndexForItem(int itemDataIndex)
@@ -79,6 +87,8 @@ GetRealIndexForItem used to get the data index excluding sections seperators
 Events that can be listened to if required
 
 ====
+
+
 
 ##InfiniteItemBehaviour and InfiniteSectionBehaviour
 Scripts attached to the row item prefab & section prefab **(Note: the item prefab need to be tagged as "listItem" and the section prefab as "listSection")** 
