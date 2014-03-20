@@ -61,7 +61,7 @@ marks where to start reading the data list (the value is 0 if not set)
 
 	string GetTitleForSection(int i)
 
-Here you can include section titles
+Here you can include section titles values
 
 ====
 
@@ -73,7 +73,7 @@ Here you can populate your row item with data (in the demo we simply set a label
 
 **Due to the current implementation of sections:**
 
-GetRealIndexForItem used to get the data index excluding sections seperators
+GetRealIndexForItem is a helper used to get the data index excluding sections seperators
 
 ===	
 
@@ -88,9 +88,7 @@ Events that can be listened to if required
 
 ====
 
-
-
 ##InfiniteItemBehaviour and InfiniteSectionBehaviour
 Scripts attached to the row item prefab & section prefab **(Note: the item prefab need to be tagged as "listItem" and the section prefab as "listSection")** 
 
-Both checks for the visiblity of the item when the list start scrolling and notifiy the InfiniteListPopulator when the items becomes invisible
+Both checks for the visiblity of the item when the list start scrolling and notifiy the InfiniteListPopulator when the items becomes invisible. you can change use them as a template and include more labels, sprites or textures.
