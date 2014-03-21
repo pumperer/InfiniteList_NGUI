@@ -42,53 +42,53 @@ The main controller script that can be attached to a gameobject (e.g. the panel)
 Some of the main methods included:
 
 ====
-    public void InitTableView(List<string> inDataList, int inNumberOfSections, List<int> inSectionsIndices)
 Initializes the list (also can be called to refresh the list with new data)
-####parameters:
-* inDataList: the List of strings we want to display (you can change it to any type you want… just make sure to change the member variables types for dataList & OriginalData)
-* inNumberOfSections: number of sections (int)
+
+	public void InitTableView(ArrayList inDataList, List<int> inSectionsIndices, int inStartIndex)
+
+
+Parameters:
+
+* inDataList: the generic list of our data (you can change it to any type you want… just make sure to change the member variables types for dataList & OriginalData)* inNumberOfSections: number of sections (int)
 * inSectionIndices: List of integers. The start index of each section (not as fancy as indexpath in iOS but did the job for me)
+* inStartIndex: where to start
 
 ===
+Refresh the list without changing the data (list start at startIndex value)
+
+	public void RefreshTableView()
+
+===
+Individual methods for changing the parameters if needed
+
 
 	public void SetStartIndex(int inStartIndex)
+	public void SetOriginalData(ArrayList inDataList)
+	public void SetSectionIndices(List<int> inSectionsIndices)
 
-marks where to start reading the data list (the value is 0 if not set)
-####parameters:
-* inStartIndex: int 
 
 ===
+You can include section titles values.. or if you have more detailed sections seperators you can change the implementation of PopulateListSectionWithIndex
 
 	string GetTitleForSection(int i)
+	void PopulateListSectionWithIndex(Transform item, int index)
 
-Here you can include section titles values
+
 
 ====
+You can do your implementation of what to populate your row item with (in the demo we simply set a label to string value from our datalist array). Simply change InfiniteItemBehaviour (mentioned later below) to include more items as you want.
 
-	void PopulateListItemWithIndex(Transform item, int newIndex,int oldIndex)
-Here you can populate your row item with data (in the demo we simply set a label to string value from our datalist array). Simply change InfiniteItemBehaviour (mentioned later below) to include more items as you want.
-
-===
-	public int GetRealIndexForItem(int itemDataIndex)
-
-**Due to the current implementation of sections:**
-
-GetRealIndexForItem is a helper used to get the data index excluding sections seperators
+	void PopulateListItemWithIndex(Transform item, int dataIndex)
 
 ===	
+Events that can be listened to.
 
-
-	public delegate void InfiniteItemIsPressed(int itemDataIndex, bool isDown);
 	public event InfiniteItemIsPressed InfiniteItemIsPressedEvent;
-	
-	public delegate void InfiniteItemIsClicked(int itemDataIndex);
 	public event InfiniteItemIsClicked InfiniteItemIsClickedEvent;
-
-Events that can be listened to if required
 
 ====
 
 ##InfiniteItemBehaviour and InfiniteSectionBehaviour
 Scripts attached to the row item prefab & section prefab **(Note: the item prefab need to be tagged as "listItem" and the section prefab as "listSection")** 
 
-Both checks for the visiblity of the item when the list start scrolling and notifiy the InfiniteListPopulator when the items becomes invisible. you can use them as a template and include more labels, sprites or textures...etc
+Both checks for the visiblity of the item when the list start scrolling and notifiy the InfiniteListPopulator when the items becomes invisible. you can change use them as a template and include more labels, sprites or textures.
