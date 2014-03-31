@@ -32,7 +32,7 @@ public class InfiniteListPopulator : MonoBehaviour {
 	public delegate void InfiniteItemIsClicked(int itemDataIndex);
 	public event InfiniteItemIsClicked InfiniteItemIsClickedEvent;
 
-	public bool enableLog = false;
+	public bool enableLog = true;
 	//Prefabs
 	const string listItemTag = "listItem";
 	const string listSectionTag = "listSection";
@@ -197,8 +197,6 @@ public class InfiniteListPopulator : MonoBehaviour {
 	}
 	#endregion
 
-
-
 	#region The private stuff... ideally you shouldn't need to call or change things directly from this region onwards
 	void InitTableViewImp(ArrayList inDataList, List<int> inSectionsIndices, int inStartIndex)
 	{
@@ -255,8 +253,10 @@ public class InfiniteListPopulator : MonoBehaviour {
 				{
 					InitListItemWithIndex(item,i,j);
 				}
-				Debug.Log(item.name+"::"+item.tag);
-				
+				if(enableLog)
+				{
+					Debug.Log(item.name+"::"+item.tag);
+				}
 				j++;
 				
 			}
