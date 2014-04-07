@@ -21,7 +21,8 @@ Features
 
 The Demo
 ============
-This demo package requires both Unity3D <http://unity3d.com> and NGUI <http://www.tasharen.com/?page_id=140> to be installed
+This demo package requires both Unity3D <http://unity3d.com> and NGUI <http://www.tasharen.com/?page_id=140> to be installed.
+video: <https://www.youtube.com/watch?v=5xFVJqzp0kY>
 
 To run the demo:
 
