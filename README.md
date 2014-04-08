@@ -34,6 +34,8 @@ To run the demo:
 The demo package is released under the MIT License:
 <http://opensource.org/licenses/MIT>
 
+Example of app using this component is Avatar Messenger for Android (Contacts list view) which is a free app on Google Play: <https://play.google.com/store/apps/details?id=com.orange.labs.avachat>
+
 Main Classes & Methods in the Demo
 ===========
 ===
